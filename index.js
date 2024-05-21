@@ -1,58 +1,34 @@
-// const {MongoClient}=require('mongodb');
+const http = require('http');
 
-// async function main(){
-
-//     const uri="mongodb+srv://amardodda23:Thiago240687@mymongodb.siyyrge.mongodb.net/?retryWrites=true&w=majority&appName=MyMongoDB";
-
-//     const client= new MongoClient(uri);
-
-//     try{
-//         await client.connect();
-
-//         console.log('Connected to MongoDB server');
-
-//         const database=client.db('sample_airbnb');
-
-//         const collection =database.collection('listingsAndReviews');
-
-//         const query={"address.country":"Brazil"};
-
-//         const cursor=collection.find(query);
-
-//         const listings=await cursor.sort({price:-1}).limit(10).toArray();
-
-//         res=listings.map(listing=>[listing.name,parseFloat((listing.price).toString())]);
-
-//         console.log(res);
-
-//         // await cursor.forEach(doc=>{
-//         //     console.log(doc.name);
-//         // })
-
-//     }catch(e){
-//         console.error(e)
-
-//     }finally{
-//         await client.close();
-
-//     }
-
-// }
-
-// main()
-
-
-const data='\nThis is a new line of text.';
-
-fs.appendFile('test.txt',data,(err)=>{
-
-    if(err){
-        console.log(err);
-        return;
+const notes = [
+    {
+        id: 1,
+        content: "HTML is easy",
+        date: "2019-05-30T17:30:31.098Z",
+        important: true
+    },
+    {
+        id: 2,
+        content: "Browser can execute only Javascript",
+        date: "2019-05-30T18:39:34.091Z",
+        important: false
+    },
+    {
+        id: 3,
+        content: "GET and POST are the most important methods of HTTP protocol",
+        date: "2019-05-30T19:20:14.298Z",
+        important: true
     }
-    console.log('File written successfully')
+];
 
 
 
+const server = http.createServer((request, response) => {
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(notes));
+});
 
+// Start the server to listen to requests on port 3001
+server.listen(3001, () => {
+    console.log('Server is running on http://127.0.0.1:3001');
 });
